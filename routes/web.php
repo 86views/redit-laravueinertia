@@ -19,17 +19,29 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
 
-Route::get('/r/{slug}', [FrontEnd\CommunityController::class, 'show'])
-       ->name('frontend.communities.show');
+Route::get('/', [Frontend\WelcomeController::class, 'welcome'])->name('welcome');
+
+Route::get('/r/{slug}', [Frontend\CommunityController::class, 'show'])
+    ->name('frontend.communities.show');
+Route::get('/r/{community_slug}/posts/{post:slug}', [Frontend\PostController::class, 'show'])
+    ->name('frontend.communities.posts.show');
+
+Route::post('/r/{community_slug}/posts/{post:slug}/comments', [Frontend\PostCommentController::class, 'store'])
+    ->name('frontend.posts.comments');
+
+Route::post('/r/{community_slug}/posts/{post:slug}/comments', [Frontend\PostCommentController::class, 'store'])
+    ->name('frontend.posts.comments');
+
+
 
 
 
@@ -40,10 +52,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::resource('/communities', Backend\CommunityController::class);
+
     Route::resource('/communities.posts', Backend\CommunityPostController::class);
+    Route::post('/posts/{post:slug}/upVote', [Backend\PostVoteController::class, 'upVote'])
+        ->name('posts.upVote');
+    Route::post('/posts/{post:slug}/downVote', [Backend\PostVoteController::class, 'downVote'])
+        ->name('posts.downVote');     
 });
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

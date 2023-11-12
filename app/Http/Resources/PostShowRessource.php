@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CommunityPostResource extends JsonResource
+class PostShowRessource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,16 +17,16 @@ class CommunityPostResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'description' => $this->description,
             'username' => $this->user->username,
-            'description' => substr($this->description, 0, 50) . '...',
             'slug' => $this->slug,
-            'votes' => $this->votes,  
+            'url' => $this->url,
+            'comments' => CommentResource::collection($this->whenLoaded('comments')),
+            'owner' => auth()->id() ==  $this->user_id ? true : false,
+            'created_at' => $this->created_at->diffForHumans(),
             'postVotes' => $this->whenLoaded('postVotes'),
-            'community_slug' => $this->community->slug,
-            'comments_count' => $this->comments_count,
-        
-            
            
-         ];
+            
+        ];
     }
 }

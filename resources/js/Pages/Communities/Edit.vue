@@ -48,23 +48,6 @@
                             />
                         </div>
 
-                        <!-- <div class="mt-4">
-                            <InputLabel for="slug" value="Slug" />
-
-                            <TextInput
-                                id="slug"
-                                type="text"
-                                class="block w-full mt-1"
-                                v-model="form.slug"
-                                autocomplete="slug"
-                            />
-
-                            <InputError
-                                class="mt-2"
-                                :message="form.errors.slug"
-                            />
-                        </div> -->
-
                         <progress
                             v-if="form.progress"
                             :value="form.progress.percentage"
@@ -110,11 +93,13 @@ const props = defineProps({
 // const form = useForm({
 //     name: props.community.name,
 //     description: props.community.description,
+//     slug: props.community.slug,
 // });
+
 
 const form = useForm(props.community);
 
 const submit = () => {
-    form.put(route("communities.update", props.community.id));
+    form.put(route("communities.update", props.community.slug));
 };
 </script>

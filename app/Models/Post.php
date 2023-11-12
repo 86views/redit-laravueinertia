@@ -20,6 +20,12 @@ class Post extends Model
             ]
         ];
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+    
    
     public function user()
     {
@@ -31,5 +37,15 @@ class Post extends Model
   {
     return $this->belongsTo(Community::class);
   }
+
+   public function comments() 
+   {
+    return $this->hasMany(Comment::class);
+   }
+
+   public  function postVotes() 
+   {
+    return $this->hasMany(PostVote::class);
+   }
     
 }

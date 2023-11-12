@@ -63,6 +63,7 @@ class CommunityController extends Controller
      */
     public function edit(Community $community)
     {
+        $this->authorize('delete', $community);
         return inertia('Communities/Edit', compact('community'));
     }
 
@@ -72,9 +73,9 @@ class CommunityController extends Controller
     public function update(ComunityStoreRequest $request, Community $community)
     {
         
-        $community->update($request->validated());
- 
-         return redirect()->route('communities.index')
+           $this->authorize('delete', $community);
+          $community->update($request->validated());
+           return redirect()->route('communities.index')
              ->with('message', 'Comunity updated successfully');
     }
 
@@ -83,6 +84,7 @@ class CommunityController extends Controller
      */
     public function destroy(Community $community)
     {
+        $this->authorize('delete', $community);
         $community->delete();
  
         return redirect()->route('communities.index')

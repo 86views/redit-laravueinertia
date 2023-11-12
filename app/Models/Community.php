@@ -9,7 +9,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 class Community extends Model
 {
     use HasFactory, Sluggable;
-    
+
 
     protected $guarded = [];
 
@@ -30,13 +30,13 @@ class Community extends Model
         ];
     }
 
-    public function getRouteKeyName() 
+    public function getRouteKeyName()
     {
         return 'slug';
-      }
-  
-      public function posts() 
-      {
+    }
+
+    public function posts()
+    {
         return  $this->hasMany(Post::class);
-      }
+    }
 }

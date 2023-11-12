@@ -18,9 +18,10 @@ class CommunityResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => substr($this->description, 0, 50) . '...',
-            'slug' => substr($this->slug, 0, 10) . '...',
-            'created_at' => $this->created_at->format('Y-m-d'),
-            'updated_at' => $this->created_at->toDateString()
+            'slug' =>  $this->slug,
+             'posts_count' => $this->posts_count,
+            // 'created_at' => $this->created_at->format('Y-m-d'),
+            // 'updated_at' => $this->created_at->toDateString()
          ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Post;
 use Inertia\Inertia;
 use App\Models\Community;
 use Illuminate\Http\Request;
@@ -63,24 +64,34 @@ class CommunityPostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Community $community, Post $post)
+    
     {
-        //
+        $this->authorize('update', $community);
+        return Inertia::render('Communities/Posts/Edit', compact('community', 'post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StorePostRequest $request, Community $community, Post $post)
     {
-        //
+
+        $this->authorize('update', $community);
+         $post->update($request->validated());
+
+         return redirect()->route('frontend.communities.show', $community->slug)
+                 ->with('message', 'Post Updated For' . ' '.  $community->slug. ' '.  $post->slug . ' '.  'Community');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Community $community, Post $post)
     {
-        //
+        $this->authorize('delete', $community);
+        $post->delete();
+        return redirect()->route('frontend.communities.show', $community->slug)
+        ->with('message', 'Post Delete Succesfully for' . ' '.  $community->slug. ' '. 'Community');
     }
 }

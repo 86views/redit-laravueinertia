@@ -49,11 +49,19 @@
                                     {{ community.id }}
                                 </td>
 
-                                <!-- <td class="px-6 py-4">
-                            {{ community.user_id }}
-                        </td> -->
+                              
                                 <td class="px-6 py-4">
-                                    {{ community.name }}
+                                   
+                                    <Link
+                                        :href="
+                                            route(
+                                                'frontend.communities.show',
+                                                community.slug
+                                            )
+                                        "
+                                        class="text-blue-500 hover:text-blue-700 font-semibold"
+                                        >{{ community.name }}</Link
+                                    >
                                 </td>
                                 <td class="px-6 py-4">{{ community.slug }}</td>
                                 <td class="px-6 py-4">
@@ -68,7 +76,7 @@
                                         :href="
                                             route(
                                                 'communities.edit',
-                                                community.id
+                                                community.slug
                                             )
                                         "
                                         class="px-2 py-1 mr-2 font-bold text-white uppercase bg-blue-600 rounded"
@@ -79,7 +87,7 @@
                                         :href="
                                             route(
                                                 'communities.destroy',
-                                                community.id
+                                                community.slug
                                             )
                                         "
                                         method="delete"

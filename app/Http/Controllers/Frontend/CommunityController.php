@@ -12,10 +12,12 @@ class CommunityController extends Controller
 {
     public function show($slug)
     {
-        
+
         $community = Community::where('slug', $slug)->firstOrFail();
 
-        $posts = CommunityPostResource::collection($community->posts()->with('user')->paginate(2));
+        $posts = CommunityPostResource::collection($community->posts()->with(['user', 'postVotes' => function ($query) {
+            $query->where('user_id', auth()->id());
+        }])->withCount('comments')->paginate(3));
         // $posts = $community->posts()->paginate(10)->through(fn ($post) => [
         //     'id' => $post->id,
         //     'title' => $post->name,
