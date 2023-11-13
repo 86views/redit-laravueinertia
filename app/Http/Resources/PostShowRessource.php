@@ -22,7 +22,7 @@ class PostShowRessource extends JsonResource
             'slug' => $this->slug,
             'url' => $this->url,
             'comments' => CommentResource::collection($this->whenLoaded('comments')),
-            'owner' => auth()->id() ==  $this->user_id ? true : false,
+            // 'owner' => auth()->id() ==  $this->user_id ? true : false,
             'created_at' => $this->created_at->diffForHumans(),
             'postVotes' => $this->whenLoaded('postVotes'),
            

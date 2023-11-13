@@ -24,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'email',
         'password',
+        'is_admin'
     ];
 
     /**
@@ -50,4 +51,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Post::class);
     }
+
+
 }

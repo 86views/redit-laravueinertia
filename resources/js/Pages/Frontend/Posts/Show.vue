@@ -37,13 +37,17 @@
 
                                     {{ post.data.created_at }}
                                 </div>
-                                <div
+                                <!-- <div
                                     v-if="
                                         $page.props.auth.auth_check &&
                                         post.data.owner
                                     "
+                                > -->
+                                <div
+                                    v-if="
+                                        $page.props.auth.auth_check "
                                 >
-                                    <Link
+                                    <Link v-if="can_update"
                                         :href="
                                             route('communities.posts.edit', [
                                                 community.slug,
@@ -53,7 +57,7 @@
                                         class="font-semibold bg-blue-500 hover:bg-blue-700 rounded-md text-white px-4 py-2 mr-1"
                                         >Edit</Link
                                     >
-                                    <Link
+                                    <Link v-if="can_delete"
                                         :href="
                                             route('communities.posts.destroy', [
                                                 community.slug,
@@ -142,9 +146,9 @@
                 </div>
             </div>
             <div class="w-full md:w-8/12">
-                <div class="p-2 m-2 text-white bg-slate-500">
-                    <h2>Latest hhhComments</h2>
-                </div>
+                <PostList :posts="posts.data" :community="community">
+                    <template #title>Popular Post</template>
+                </PostList>
             </div>
         </section>
     </GuestLayout>
@@ -154,10 +158,15 @@
 import { Link, useForm } from "@inertiajs/vue3";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import PostVote from "@/Components/app/PostVote.vue";
+import PostList from "@/Components/app/PostList.vue";
 
 const props = defineProps({
     community: Object,
     post: Object,
+    posts: Object,
+    can_delete: Boolean,
+    can_update: Boolean,
+
 });
 
 const form = useForm({

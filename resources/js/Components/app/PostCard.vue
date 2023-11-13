@@ -7,16 +7,27 @@
         </div>
         <div>
             <div class="flex m-2 p-2 text-sm">
-                <Link class="font-semibold mr-3 hover:text-indigo-700">
-                    {{ community.name }}</Link
-                >
-                <div class="flex">
+               
+                
+                 
+                    <Link  :href="route('frontend.communities.show', community)"
+                    class="font-semibold mr-3 hover:text-indigo-700"
+                    >r/{{ community }}</Link>
                     Posted by
-                    <span class="font-semibold mx-1">{{ post.username }}</span>
-                    {{ post.username }}
-                </div>
+                    <div class="flex">
+                        <span class="font-semibold mx-1">{{ post.username }}</span>
+                 
+                    </div>
+
+                   
+                    <div class="flex">
+                        <span class="font-semibold mx-1">{{ post.created_at }}</span>
+                 
+                    </div>
+                   
+                
             </div>
-            <Link>
+            <Link  :href="route('frontend.communities.posts.show', [community, post.slug])">
                 <h5
                     class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white hover:text-indigo-700"
                 ></h5>

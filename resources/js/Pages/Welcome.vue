@@ -14,7 +14,10 @@
             <div class="w-4/12 p-4">
                 <div class="p-2 m-2 text-white bg-slate-500">
                     <h2>Top Communities</h2>
-                    <CommunityList :communities="communities.data" />
+                    <CommunityList :communities="communities.data">
+                        <template #title>Top Communities </template>
+                    </CommunityList>
+
                 </div>
             </div>
         </section>

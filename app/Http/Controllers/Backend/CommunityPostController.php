@@ -53,7 +53,7 @@ class CommunityPostController extends Controller
        
     }
 
-    /**
+    /**o
      * Display the specified resource.
      */
     public function show(string $id)
@@ -67,7 +67,7 @@ class CommunityPostController extends Controller
     public function edit(Community $community, Post $post)
     
     {
-        $this->authorize('update', $community);
+        $this->authorize('update', $post);
         return Inertia::render('Communities/Posts/Edit', compact('community', 'post'));
     }
 
@@ -77,7 +77,7 @@ class CommunityPostController extends Controller
     public function update(StorePostRequest $request, Community $community, Post $post)
     {
 
-        $this->authorize('update', $community);
+        $this->authorize('update', $post);
          $post->update($request->validated());
 
          return redirect()->route('frontend.communities.show', $community->slug)
@@ -89,7 +89,7 @@ class CommunityPostController extends Controller
      */
     public function destroy(Community $community, Post $post)
     {
-        $this->authorize('delete', $community);
+        $this->authorize('delete', $post);
         $post->delete();
         return redirect()->route('frontend.communities.show', $community->slug)
         ->with('message', 'Post Delete Succesfully for' . ' '.  $community->slug. ' '. 'Community');
